@@ -1,42 +1,19 @@
-"use client"
+import { Footer } from "@/components/layout/footer";
+import { HomeButtons } from "@/components/buttons/home-buttons"; // New component
 
-import Image from "next/image";
-import {Footer} from "@/components/layout/footer";
-import {Button} from "@/components/buttons/button";
-import {useRouter} from "next/navigation";
+export default function HomePage() {
+    return (
+        <div className="space-y-3 flex min-h-screen flex-col items-center justify-center bg-background text-foreground">
+            <h1 className="text-4xl font-bold">Welcome to Fingerprint</h1>
+            <p className="text-lg text-gray-500 dark:text-gray-400">
+                Secure authentication made easy.
+            </p>
 
-export default function Home() {
-  const router = useRouter();
+            {/* Client-side buttons */}
+            <HomeButtons />
 
-  return (
-      <div
-          className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-        <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-          <Image
-              className="dark:invert"
-              src="/next.svg"
-              alt="Next.js logo"
-              width={180}
-              height={38}
-              priority
-          />
-          <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-            <li className="mb-2">
-              Get started by editing{" "}
-              <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-                app/page.tsx
-              </code>
-              .
-            </li>
-            <li>Save and see your changes instantly.</li>
-          </ol>
-
-          <div className="flex gap-4 items-center flex-col sm:flex-row">
-            <Button variant={"gradientPrimary"} onClick={() => router.push("/sign-in")}>Get Started</Button>
-            <Button variant={"outline"}>Learn More</Button>
-          </div>
-        </main>
-        <Footer/>
-      </div>
-  );
+            {/* Footer Component */}
+            <Footer />
+        </div>
+    );
 }
