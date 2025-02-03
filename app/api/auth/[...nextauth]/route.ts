@@ -10,9 +10,21 @@ export const authOptions: NextAuthOptions = {
         }),
     ],
     pages: {
-        signIn: "/sign-in", // Redirects to your custom sign-in page
+        signIn: "/sign-in",
+        error: "/sign-in", // Redirect errors back to sign-in page
     },
-    secret: process.env.NEXTAUTH_SECRET, // Make sure this is set in .env.local
+    callbacks: {
+        async session({ session }) {
+            console.log("Session created:", session);
+            return session;
+        },
+        async redirect({ url, baseUrl }) {
+            console.log("Redirecting to:", url);
+            return baseUrl + "/dashboard"; // ✅ Redirect after successful login
+        },
+    },
+    secret: process.env.NEXTAUTH_SECRET,
+    debug: true,
 };
 
 const handler = NextAuth(authOptions);

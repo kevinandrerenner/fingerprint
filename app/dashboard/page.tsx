@@ -1,25 +1,28 @@
 "use client";
 
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/buttons/button";
+import { DashboardNavbar } from "@/components/layout/DashboardNavbar";
 
 export default function DashboardPage() {
+    const { data: session, status } = useSession();
     const router = useRouter();
 
-    return (
-        <div className="flex min-h-screen flex-col items-center justify-center bg-background text-foreground">
-            <h1 className="text-4xl font-bold">Welcome to Your Dashboard</h1>
-            <p className="mt-2 text-lg text-gray-500 dark:text-gray-400">
-                This is a placeholder for your future dashboard.
-            </p>
+    if (status === "loading") {
+        return <p>Loading session...</p>;
+    }
 
-            <div className="mt-6 flex space-x-4">
-                <Button variant="gradientPrimary" onClick={() => router.push("/")}>
-                    Go to Home
-                </Button>
-                <Button variant="outline" onClick={() => router.push("/sign-out")}>
-                    Sign Out
-                </Button>
+    if (!session) {
+        router.push("/sign-in"); // Redirect to sign-in if not logged in
+        return null;
+    }
+
+    return (
+        <div className="min-h-screen bg-background text-foreground">
+            <DashboardNavbar />
+            <div className="p-6">
+                <h1 className="text-3xl font-bold">Welcome, {session.user?.name}</h1>
+                <p className="text-gray-500">This is your dashboard.</p>
             </div>
         </div>
     );
